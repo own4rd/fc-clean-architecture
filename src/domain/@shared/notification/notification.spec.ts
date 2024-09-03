@@ -34,6 +34,33 @@ describe("Unit testss for notifications", () => {
     expect(notification.messages()).toBe(
       "customer: error message,customer: error message2,order: error message3,"
     );
+    
+    const error4 = {
+      message: "error message4",
+      context: "product",
+    };
+    notification.addError(error4);
+
+    expect(notification.messages("product")).toBe(
+      "product: error message4,"
+    );
+    expect(notification.messages()).toBe(
+      "customer: error message,customer: error message2,order: error message3,product: error message4,"
+    );
+
+    const error5 = {
+      message: "error message5",
+      context: "product",
+    };
+    notification.addError(error5);
+
+    expect(notification.messages("product")).toBe(
+      "product: error message4,product: error message5,"
+    );
+    expect(notification.messages()).toBe(
+      "customer: error message,customer: error message2,order: error message3,product: error message4,product: error message5,"
+    );
+    
   });
 
   it("should check if notification has at least one error", () => {
